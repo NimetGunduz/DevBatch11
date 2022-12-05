@@ -1,0 +1,11 @@
+NewCar audi = new NewCar();
+audi.startCar('A3', 'Audi');
+audi.Accelerate(80);
+audi.checkSpeed();
+audi.Brake(55);
+audi.checkSpeed();
+audi.Accelerate(10);
+audi.checkSpeed();
+audi.Brake(40);
+audi.checkSpeed();
+audi.stopCar();
