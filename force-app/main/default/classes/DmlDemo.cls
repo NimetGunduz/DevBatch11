@@ -48,7 +48,7 @@ public  class DmlDemo {
       cnt.AccountId = acc.id;
       insert cnt;
       system.debug('contact record ' + cnt);
-      system.debug('Merhaba');
+      system.debug('test');
 
       
    }
