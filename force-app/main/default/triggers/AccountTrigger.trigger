@@ -1,4 +1,9 @@
 trigger AccountTrigger on Account (before insert, before update, after insert, after update) {
+    if (trigger.isAfter && trigger.isInsert) {
+        AccountTriggerHandler.createContact(Trigger.New, Trigger.Old, Trigger.NewMap, Trigger.OldMap);
+        
+    }
+
     
     if (Trigger.isBefore) {
         AccountTriggerHandler.updateDescription(Trigger.New, Trigger.Old, Trigger.NewMap, Trigger.OldMap);

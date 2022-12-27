@@ -1,4 +1,5 @@
 public class AccountTriggerHandler {
+
     public static void updateDescription(List<Account> accTriggerNew, List<account> accTriggerOld,
                                 Map<id, account> accTriggerNewMap, Map<id, account> accTriggerOldMap) {
         for (account eachAcc : accTriggerNew) {
@@ -41,19 +42,19 @@ public class AccountTriggerHandler {
 
         //get contacts for all those accounts
             // get contacts for all those 3 account. 10 contacts
-            list<contact> allContacts = [select id, vip__c, account.id from contact where account.id in : accIds];
+            list<contact> allContacts = [select id, vip__c, AccountId from contact where account.id in : accIds];
             
             if(!allContacts.isEmpty()){
          // for loop contacts
               //set vip for each contact with Acount's vip field
               for (contact eachCon : allContacts) {
                 //get account's vip field
-                id contactAccId = eachCon.AccountId;
-                Account newAcc = accTriggerNewMap.get(contactAccId);
-                boolean accVIP = newAcc.vip__c;
+                // id contactAccId = eachCon.AccountId;
+                // Account newAcc = accTriggerNewMap.get(contactAccId);
+                // boolean accVIP = newAcc.vip__c;
 
-                boolean accVIP2 = accTriggerNewMap.get(eachCon.AccountId).vip__c;
-                eachCon.vip__c = accVIP;
+                //boolean accVIP2 = accTriggerNewMap.get(eachCon.AccountId).vip__c;  !!bir diger yol
+                eachCon.vip__c = accTriggerNewMap.get(eachCon.AccountId).vip__c;
 
                 
                 
@@ -62,5 +63,5 @@ public class AccountTriggerHandler {
         // update contacts. 
         update allContacts;
     }
-}
+  } 
 }
