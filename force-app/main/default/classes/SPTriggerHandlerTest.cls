@@ -20,4 +20,6 @@ public class SPTriggerHandlerTest {
         List<Salesforce_Project__c> allSP = [select id, description__c from Salesforce_Project__c];
         system.assert(allSP[0].Description__c.contains('future'));
    }
+
+   
 }

@@ -1,4 +1,16 @@
 public class AccountTriggerHandler {
+    @future
+    public static void futureMethodAccount(set<id> accIds) {
+        List<Account> listAcc = [select id, name, Number_of_Contacts__c, (select id from Contacts) from Account where id in : accIds];
+        List<Account> updateAccList = new list<account>();
+        for (account eachAcc : listAcc) {
+            eachAcc.Number_of_contacts__c = eachAcc.Contacts.size();
+            updateAccList.add(eachAcc);
+            
+        }
+        update updateAccList;
+        
+    }
 
     public static void updateDescription(List<Account> accTriggerNew, List<account> accTriggerOld,
                                 Map<id, account> accTriggerNewMap, Map<id, account> accTriggerOldMap) {

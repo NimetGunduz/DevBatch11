@@ -1,16 +1,34 @@
 public class SalesforceProjectTriggerHandler {
     public static void createDefaultTicket(List<salesforce_project__c> spTriggerNew) {
-        List<Salesforce_Ticket__c>  listST = new List<Salesforce_Ticket__c>();
+        try{
+            List<Salesforce_Ticket__c>  listST = new List<Salesforce_Ticket__c>();
 
-        for (salesforce_project__c eachSP : spTriggerNew) {
-            Salesforce_Ticket__c newST = new Salesforce_Ticket__c();
-            newST.Subject__c = 'Default ticket';
-            newST.Salesforce_Project__c = eachSP.Id;
-            listST.add(newST);
+            for (salesforce_project__c eachSP : spTriggerNew) {
+                Salesforce_Ticket__c newST = new Salesforce_Ticket__c();
+                newST.Subject__c = 'Default ticket';
+                newST.Salesforce_Project__c = eachSP.Id;
+                //newST.Priority__c = 'Medium';
+                listST.add(newST);
+            }
+            if (!listST.isEmpty()) {
+                List<database.SaveResult> results = database.insert(listST, false);
+                for(database.SaveResult r: results){
+                if(r.isSuccess()){
+                    system.debug('inserted successfully, record id is ' + r.getId());
+                } else {
+                    
+                    system.debug('errored out. errors are ' + r.getErrors());
+                }
+            }  
+            }
+
+        } catch(exception ex){
+            for (salesforce_project__c sp : spTriggerNew) {
+                sp.addError('Error in inserting Default ticket. Please contact your dear administrator.');
+                
+            }
         }
-        if (!listST.isEmpty()) {
-            insert listST;
-        }
+       
     }
 
     public static void completeSPvalidation(List<salesforce_project__c> spTriggerNew, List<salesforce_project__c> spTriggerOld, 
